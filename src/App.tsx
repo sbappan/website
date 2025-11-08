@@ -1,7 +1,10 @@
-import { Navbar, AnimatedSection } from '@/components';
+import { Navbar, AnimatedSection, SkillCard, ProjectCard } from '@/components';
 import { SectionWrapper } from '@/components/ui';
 import { Button } from '@/components/ui';
-import { ArrowRight, Download } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { skillCategories } from '@/data/skills';
+import { projects } from '@/data/projects';
+import { aboutData } from '@/data/about';
 
 function App() {
   return (
@@ -25,7 +28,7 @@ function App() {
             <p className="text-xl md:text-2xl text-gray-600 mb-8 mx-auto">
               Full-stack developer specializing in building exceptional digital experiences
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex justify-center">
               <Button
                 variant="primary"
                 size="lg"
@@ -40,15 +43,6 @@ function App() {
               >
                 View My Work
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                icon={Download}
-                iconPosition="left"
-                onClick={() => alert('Resume download functionality to be implemented')}
-              >
-                Download Resume
-              </Button>
             </div>
           </div>
         </AnimatedSection>
@@ -62,19 +56,32 @@ function App() {
         background="gradient"
       >
         <AnimatedSection variant="fade-in">
-          <div className="max-w-3xl mx-auto">
-            <p className="text-lg text-gray-700 mb-6">
-              This is a placeholder for your about section. Here you can share your story,
-              background, and what drives you as a developer.
-            </p>
-            <p className="text-lg text-gray-700 mb-6">
-              Talk about your journey into software development, your passions, and what makes
-              you unique. This section will be populated with your actual content in Phase 3.
-            </p>
-            <p className="text-lg text-gray-700">
-              You can also mention your approach to problem-solving, favorite technologies,
-              and what you're currently learning or excited about.
-            </p>
+          <div className="max-w-4xl mx-auto">
+            {/* Bio Content */}
+            <div className="max-w-3xl mx-auto mb-12">
+              {aboutData.bio.map((paragraph, index) => (
+                <p key={index} className="text-lg text-gray-700 mb-6 last:mb-0">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+              {aboutData.stats.map((stat, index) => (
+                <div
+                  key={index}
+                  className="text-center p-6 bg-white/50 rounded-xl border border-gray-200 hover:shadow-md transition-shadow"
+                >
+                  <div className="text-3xl md:text-4xl font-bold text-primary-600 mb-2">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm md:text-base text-gray-600 font-medium">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </AnimatedSection>
       </SectionWrapper>
@@ -88,32 +95,8 @@ function App() {
       >
         <AnimatedSection variant="fade-up">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Placeholder project cards */}
-            {[1, 2, 3].map((project) => (
-              <div
-                key={project}
-                className="bg-white rounded-xl shadow-md border border-gray-100 p-6 hover:shadow-xl transition-shadow duration-300"
-              >
-                <div className="aspect-video bg-gradient-to-br from-primary-100 to-secondary-100 rounded-lg mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  Project {project}
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  This is a placeholder for your project description. It will showcase your
-                  work and accomplishments.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium">
-                    React
-                  </span>
-                  <span className="px-3 py-1 bg-secondary-100 text-secondary-700 rounded-full text-sm font-medium">
-                    TypeScript
-                  </span>
-                  <span className="px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-sm font-medium">
-                    Tailwind
-                  </span>
-                </div>
-              </div>
+            {projects.map((project) => (
+              <ProjectCard key={project.id} {...project} />
             ))}
           </div>
         </AnimatedSection>
@@ -127,52 +110,20 @@ function App() {
         background="gradient"
       >
         <AnimatedSection variant="fade-up" delay={0.1}>
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Frontend */}
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Frontend</h3>
-                <div className="flex flex-wrap gap-2">
-                  {['React', 'TypeScript', 'Tailwind CSS', 'Next.js', 'Vite'].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+              {skillCategories.map((category) => (
+                <div key={category.name}>
+                  <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">
+                    {category.name}
+                  </h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {category.skills.map((skill) => (
+                      <SkillCard key={skill.name} name={skill.name} icon={skill.icon} />
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              {/* Backend */}
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Backend</h3>
-                <div className="flex flex-wrap gap-2">
-                  {['Node.js', 'Python', 'PostgreSQL', 'MongoDB', 'REST APIs'].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-secondary-100 text-secondary-700 rounded-full text-sm font-medium"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Tools */}
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Tools & Other</h3>
-                <div className="flex flex-wrap gap-2">
-                  {['Git', 'Docker', 'AWS', 'Figma', 'VS Code'].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-sm font-medium"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </AnimatedSection>
@@ -194,7 +145,7 @@ function App() {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => window.location.href = 'mailto:your.email@example.com'}
+              onClick={() => window.location.href = 'mailto:santhosh.appan@example.com'}
             >
               Send Me an Email
             </Button>
@@ -203,7 +154,7 @@ function App() {
           {/* Footer */}
           <div className="mt-16 pt-8 border-t border-gray-200 text-center">
             <p className="text-gray-600">
-              © {new Date().getFullYear()} Your Name. Built with React, TypeScript, and Tailwind CSS.
+              © {new Date().getFullYear()} Santhosh Appan. Built with React, TypeScript, and Tailwind.
             </p>
           </div>
         </AnimatedSection>

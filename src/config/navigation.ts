@@ -35,25 +35,25 @@ export const navLinks: NavLink[] = [
 export const socialLinks = [
   {
     name: 'GitHub',
-    url: 'https://github.com/yourusername',
+    url: 'https://github.com/sbappan',
     icon: Github,
     ariaLabel: 'Visit my GitHub profile',
   },
   {
     name: 'LinkedIn',
-    url: 'https://linkedin.com/in/yourusername',
+    url: 'https://linkedin.com/in/sbappan',
     icon: Linkedin,
     ariaLabel: 'Visit my LinkedIn profile',
   },
   {
     name: 'Twitter',
-    url: 'https://twitter.com/yourusername',
+    url: 'https://twitter.com/sbappan_',
     icon: Twitter,
     ariaLabel: 'Visit my Twitter profile',
   },
   {
     name: 'Email',
-    url: 'mailto:your.email@example.com',
+    url: 'mailto:sanbappan@gmail.com',
     icon: Mail,
     ariaLabel: 'Send me an email',
   },
@@ -61,15 +61,15 @@ export const socialLinks = [
 
 // Contact information
 export const contactInfo = {
-  email: 'your.email@example.com',
-  location: 'Your City, Country',
+  email: 'sanbappan@gmail.com',
+  location: 'Ontario, Canada',
   availability: 'Available for freelance work',
 };
 
 // Site metadata
 export const siteConfig = {
-  name: 'Your Name',
-  title: 'Portfolio - Your Name',
+  name: 'Santhosh Appan',
+  title: 'Portfolio - Santhosh Appan',
   description: 'Full-stack developer specializing in modern web technologies',
-  url: 'https://yourwebsite.com',
+  url: 'https://sbappan.com/',
 };

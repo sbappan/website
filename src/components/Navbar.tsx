@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { navLinks, siteConfig } from '@/config/navigation';
+import { navLinks } from '@/config/navigation';
 
 /**
  * Navbar Component

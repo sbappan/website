@@ -13,3 +13,11 @@ export type {
   NavLink,
   NavSection,
 } from './components';
+
+export type {
+  Project,
+  Skill,
+  SkillCategory,
+  AboutStat,
+  AboutData,
+} from './data';
