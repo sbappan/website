@@ -98,7 +98,7 @@ export function Navbar() {
   const handleNavClick = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const offset = 80; // Height of fixed navbar
+      const offset = 64; // Height of fixed navbar
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 
@@ -111,7 +111,7 @@ export function Navbar() {
   };
 
   const navbarClasses = `
-    fixed top-0 left-0 right-0 z-50 transition-all duration-300
+    fixed top-0 left-0 right-0 flex justify-center z-50 transition-all duration-300
     ${isScrolled ? 'bg-white/80 backdrop-blur-lg shadow-md' : 'bg-transparent'}
   `;
 
@@ -120,59 +120,61 @@ export function Navbar() {
 
   return (
     <nav className={navbarClasses} role="navigation" aria-label="Main navigation">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20">
-          {/* Logo / Name */}
-          <div className="flex-shrink-0">
+      <div className="flex justify-between items-center h-14 md:h-16 max-w-4xl w-full">
+        {/* Logo / Name */}
+        <div className="flex-shrink-0">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="flex items-center hover:opacity-80 transition-opacity"
+          >
+            <img
+              src="/SBA_logo.svg"
+              alt="SBA Logo"
+              className="h-8 md:h-10 w-auto"
+            />
+          </a>
+        </div>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex md:items-center md:gap-8">
+          {navLinks.map((link) => (
             <a
-              href="#"
+              key={link.section}
+              href={link.href}
               onClick={(e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                handleNavClick(link.section);
               }}
-              className="text-xl md:text-2xl font-bold text-gray-900 hover:text-primary-600 transition-colors"
+              className={`
+                ${linkBaseClasses}
+                ${activeSection === link.section ? activeLinkClasses : ''}
+                relative
+                after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5
+                after:bg-primary-600 after:transform after:scale-x-0 after:transition-transform
+                after:duration-200 hover:after:scale-x-100
+                ${activeSection === link.section ? 'after:scale-x-100' : ''}
+              `}
             >
-              {siteConfig.name}
+              {link.label}
             </a>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.section}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(link.section);
-                }}
-                className={`
-                  ${linkBaseClasses}
-                  ${activeSection === link.section ? activeLinkClasses : ''}
-                  relative
-                  after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5
-                  after:bg-primary-600 after:transform after:scale-x-0 after:transition-transform
-                  after:duration-200 hover:after:scale-x-100
-                  ${activeSection === link.section ? 'after:scale-x-100' : ''}
-                `}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          ))}
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          type="button"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors"
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
       {/* Mobile Menu Overlay */}
@@ -186,7 +188,7 @@ export function Navbar() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="fixed inset-0 bg-black/20 backdrop-blur-sm md:hidden"
-              style={{ top: '64px' }}
+              style={{ top: '56px' }}
               onClick={() => setIsMenuOpen(false)}
               aria-hidden="true"
             />
@@ -198,7 +200,7 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-16 bottom-0 w-64 bg-white shadow-xl md:hidden overflow-y-auto"
+              className="fixed right-0 top-14 bottom-0 w-64 bg-white shadow-xl md:hidden overflow-y-auto"
             >
               <div className="flex flex-col p-6 gap-6">
                 {navLinks.map((link) => (

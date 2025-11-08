@@ -14,15 +14,15 @@ function App() {
         id="hero"
         className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 pt-16"
       >
-        <AnimatedSection variant="fade-up" className="w-full">
-          <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <AnimatedSection variant="fade-up">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6">
               Hi, I'm{' '}
               <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                Your Name
+                Santhosh Appan
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 mx-auto">
               Full-stack developer specializing in building exceptional digital experiences
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
