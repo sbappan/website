@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navLinks } from '@/config/navigation';
@@ -95,7 +95,8 @@ export function Navbar() {
     };
   }, [isMenuOpen]);
 
-  const handleNavClick = (sectionId: string) => {
+  // Memoize nav click handler to prevent navigation link re-renders (used by 5+ links)
+  const handleNavClick = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       const offset = 64; // Height of fixed navbar
@@ -108,7 +109,7 @@ export function Navbar() {
       });
     }
     setIsMenuOpen(false);
-  };
+  }, []);
 
   const navbarClasses = `
     fixed top-0 left-0 right-0 flex justify-center z-50 transition-all duration-300

@@ -1,16 +1,29 @@
+import { memo, useCallback } from 'react';
 import type { Project } from '@/types';
 import { ExternalLink, Github } from 'lucide-react';
 import { Button } from './ui';
 
 interface ProjectCardProps extends Project {}
 
+// Map gradient names to Tailwind gradient classes (moved outside to prevent recreation on every render)
+const GRADIENT_MAP: Record<string, string> = {
+  'gradient-blue-purple': 'from-blue-400 to-purple-500',
+  'gradient-green-blue': 'from-green-400 to-blue-500',
+  'gradient-orange-pink': 'from-orange-400 to-pink-500',
+  'gradient-purple-pink': 'from-purple-400 to-pink-500',
+  'gradient-red-orange': 'from-red-400 to-orange-500',
+  'gradient-cyan-blue': 'from-cyan-400 to-blue-500',
+};
+
 /**
  * ProjectCard Component
  *
  * Displays a project with image, title, description, tags, and action buttons.
  * Features hover effects and responsive design.
+ *
+ * Memoized to prevent unnecessary re-renders (6 instances in the app).
  */
-export function ProjectCard({
+export const ProjectCard = memo(function ProjectCard({
   title,
   description,
   image,
@@ -18,17 +31,16 @@ export function ProjectCard({
   githubUrl,
   liveUrl,
 }: ProjectCardProps) {
-  // Map gradient names to Tailwind gradient classes
-  const gradientMap: Record<string, string> = {
-    'gradient-blue-purple': 'from-blue-400 to-purple-500',
-    'gradient-green-blue': 'from-green-400 to-blue-500',
-    'gradient-orange-pink': 'from-orange-400 to-pink-500',
-    'gradient-purple-pink': 'from-purple-400 to-pink-500',
-    'gradient-red-orange': 'from-red-400 to-orange-500',
-    'gradient-cyan-blue': 'from-cyan-400 to-blue-500',
-  };
+  const gradientClass = GRADIENT_MAP[image] || 'from-primary-400 to-secondary-500';
 
-  const gradientClass = gradientMap[image] || 'from-primary-400 to-secondary-500';
+  // Memoize button handlers to prevent Button re-renders
+  const handleGithubClick = useCallback(() => {
+    if (githubUrl) window.open(githubUrl, '_blank');
+  }, [githubUrl]);
+
+  const handleLiveClick = useCallback(() => {
+    if (liveUrl) window.open(liveUrl, '_blank');
+  }, [liveUrl]);
 
   return (
     <div className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group">
@@ -66,7 +78,7 @@ export function ProjectCard({
               size="sm"
               icon={Github}
               iconPosition="left"
-              onClick={() => window.open(githubUrl, '_blank')}
+              onClick={handleGithubClick}
             >
               Code
             </Button>
@@ -77,7 +89,7 @@ export function ProjectCard({
               size="sm"
               icon={ExternalLink}
               iconPosition="left"
-              onClick={() => window.open(liveUrl, '_blank')}
+              onClick={handleLiveClick}
             >
               Live Demo
             </Button>
@@ -86,4 +98,4 @@ export function ProjectCard({
       </div>
     </div>
   );
-}
+});

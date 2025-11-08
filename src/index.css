@@ -1,9 +1,9 @@
-@import "tailwindcss";
-
-/* Import Inter font */
+/* Import Inter font - must come before Tailwind to avoid PostCSS warnings */
 @import "@fontsource/inter/400.css";
 @import "@fontsource/inter/600.css";
 @import "@fontsource/inter/700.css";
+
+@import "tailwindcss";
 
 /* Tailwind v4 Theme Customization */
 @theme {

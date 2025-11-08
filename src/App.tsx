@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { Navbar, AnimatedSection, SkillCard, ProjectCard } from '@/components';
 import { SectionWrapper } from '@/components/ui';
 import { Button } from '@/components/ui';
@@ -7,6 +9,41 @@ import { projects } from '@/data/projects';
 import { aboutData } from '@/data/about';
 
 function App() {
+  // Memoize button handlers to prevent Button re-renders
+  const scrollToProjects = useCallback(() => {
+    const element = document.getElementById('projects');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
+
+  const handleEmailClick = useCallback(() => {
+    window.location.href = 'mailto:santhosh.appan@example.com';
+  }, []);
+
+  // Stagger animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.25, 0.4, 0.25, 1] as const,
+      },
+    },
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
@@ -34,12 +71,7 @@ function App() {
                 size="lg"
                 icon={ArrowRight}
                 iconPosition="right"
-                onClick={() => {
-                  const element = document.getElementById('projects');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
+                onClick={scrollToProjects}
               >
                 View My Work
               </Button>
@@ -94,11 +126,19 @@ function App() {
         background="default"
       >
         <AnimatedSection variant="fade-up">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+          >
             {projects.map((project) => (
-              <ProjectCard key={project.id} {...project} />
+              <motion.div key={project.id} variants={itemVariants}>
+                <ProjectCard {...project} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </AnimatedSection>
       </SectionWrapper>
 
@@ -112,17 +152,31 @@ function App() {
         <AnimatedSection variant="fade-up" delay={0.1}>
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-              {skillCategories.map((category) => (
-                <div key={category.name}>
+              {skillCategories.map((category, categoryIndex) => (
+                <motion.div
+                  key={category.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-100px' }}
+                  transition={{ delay: categoryIndex * 0.1, duration: 0.5 }}
+                >
                   <h3 className="text-xl font-bold text-gray-900 mb-6 text-center">
                     {category.name}
                   </h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  <motion.div
+                    className="grid grid-cols-2 sm:grid-cols-3 gap-4"
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-100px' }}
+                  >
                     {category.skills.map((skill) => (
-                      <SkillCard key={skill.name} name={skill.name} icon={skill.icon} />
+                      <motion.div key={skill.name} variants={itemVariants}>
+                        <SkillCard name={skill.name} icon={skill.icon} />
+                      </motion.div>
                     ))}
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -145,7 +199,7 @@ function App() {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => window.location.href = 'mailto:santhosh.appan@example.com'}
+              onClick={handleEmailClick}
             >
               Send Me an Email
             </Button>
