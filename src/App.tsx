@@ -58,7 +58,7 @@ function App() {
         <AnimatedSection variant="fade-in">
           <div className="max-w-4xl mx-auto">
             {/* Bio Content */}
-            <div className="max-w-3xl mx-auto mb-12">
+            <div className="max-w-3xl mx-auto mb-12 text-left">
               {aboutData.bio.map((paragraph, index) => (
                 <p key={index} className="text-lg text-gray-700 mb-6 last:mb-0">
                   {paragraph}
