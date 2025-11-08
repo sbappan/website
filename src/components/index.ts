@@ -2,6 +2,7 @@
 export { Container } from './Container';
 export { Navbar } from './Navbar';
 export { default as AnimatedSection } from './AnimatedSection';
+export { ScrollProgress } from './ScrollProgress';
 
 // Feature Components
 export { SkillCard } from './SkillCard';

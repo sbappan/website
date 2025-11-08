@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Navbar, AnimatedSection, SkillCard, ProjectCard } from '@/components';
+import { Navbar, AnimatedSection, SkillCard, ProjectCard, ScrollProgress } from '@/components';
 import { SectionWrapper } from '@/components/ui';
 import { Button } from '@/components/ui';
 import { ArrowRight } from 'lucide-react';
@@ -46,6 +46,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Scroll Progress Indicator */}
+      <ScrollProgress />
+
       {/* Navigation */}
       <Navbar />
 
@@ -62,9 +65,27 @@ function App() {
                 Santhosh Appan
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 mx-auto">
-              Full-stack developer specializing in building exceptional digital experiences
-            </p>
+            <motion.p
+              className="text-xl md:text-2xl text-gray-600 mb-8 mx-auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+            >
+              {['Full-stack', 'developer', 'specializing', 'in', 'building', 'exceptional', 'digital', 'experiences'].map((word, index) => (
+                <motion.span
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 0.6 + index * 0.1,
+                    duration: 0.3,
+                  }}
+                  className="inline-block mr-2"
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </motion.p>
             <div className="flex justify-center">
               <Button
                 variant="primary"
