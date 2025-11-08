@@ -1,4 +1,4 @@
-import { BadgeProps } from '../../types';
+import type { BadgeProps } from '@/types';
 
 /**
  * Badge Component

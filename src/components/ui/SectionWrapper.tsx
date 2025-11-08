@@ -1,5 +1,5 @@
-import { SectionWrapperProps } from '../../types';
-import { Container } from '../Container';
+import type { SectionWrapperProps } from '@/types';
+import { Container } from '@/components/Container';
 
 /**
  * SectionWrapper Component

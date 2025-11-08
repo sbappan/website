@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 // Button Component Types
 export type ButtonVariant = 'primary' | 'secondary' | 'outline';

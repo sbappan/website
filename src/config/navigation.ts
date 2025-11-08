@@ -1,5 +1,5 @@
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
-import { NavLink } from '@/types';
+import type { NavLink } from '@/types';
 
 /**
  * Navigation Configuration
