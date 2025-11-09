@@ -4,7 +4,27 @@
     <meta charset="UTF-8" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/SBA_logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Uncomment these lines after generating PNG/ICO files (see FAVICON_GENERATION.md):
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    -->
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sbappan.com/" />
+
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+    <!-- Preload Critical Fonts (LCP Optimization) -->
+    <link rel="preload" href="/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Preload Critical Assets -->
+    <link rel="preload" href="/favicon.svg" as="image" />
 
     <!-- Viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,6 +43,10 @@
     <meta property="og:url" content="https://sbappan.com/" />
     <meta property="og:title" content="Santhosh Appan - Full Stack Developer Portfolio" />
     <meta property="og:description" content="Portfolio of Santhosh Appan, a full-stack developer specializing in React, Node.js, and modern web technologies. View projects and get in touch." />
+    <meta property="og:image" content="https://sbappan.com/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/svg+xml" />
     <meta property="og:site_name" content="Santhosh Appan Portfolio" />
 
     <!-- Twitter -->
@@ -30,6 +54,37 @@
     <meta property="twitter:url" content="https://sbappan.com/" />
     <meta property="twitter:title" content="Santhosh Appan - Full Stack Developer Portfolio" />
     <meta property="twitter:description" content="Portfolio of Santhosh Appan, a full-stack developer specializing in React, Node.js, and modern web technologies. View projects and get in touch." />
+    <meta property="twitter:image" content="https://sbappan.com/og-image.svg" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Santhosh Appan",
+      "jobTitle": "Full Stack Developer",
+      "url": "https://sbappan.com",
+      "sameAs": [
+        "https://github.com/sbappan",
+        "https://linkedin.com/in/santhoshappan"
+      ],
+      "knowsAbout": ["React", "Node.js", "TypeScript", "JavaScript", "Web Development"],
+      "description": "Full-stack developer specializing in React, Node.js, and modern web technologies"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Santhosh Appan Portfolio",
+      "url": "https://sbappan.com",
+      "description": "Portfolio of Santhosh Appan, a full-stack developer specializing in React, Node.js, and modern web technologies",
+      "author": {
+        "@type": "Person",
+        "name": "Santhosh Appan"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

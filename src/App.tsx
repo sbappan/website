@@ -69,7 +69,7 @@ function App() {
               className="text-xl md:text-2xl text-gray-600 mb-8 mx-auto"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
             >
               {['Full-stack', 'developer', 'specializing', 'in', 'building', 'exceptional', 'digital', 'experiences'].map((word, index) => (
                 <motion.span
@@ -77,8 +77,8 @@ function App() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 0.6 + index * 0.1,
-                    duration: 0.3,
+                    delay: 0.3 + index * 0.04,
+                    duration: 0.25,
                   }}
                   className="inline-block mr-2"
                 >

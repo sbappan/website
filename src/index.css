@@ -1,9 +1,22 @@
-/* Import Inter font - must come before Tailwind to avoid PostCSS warnings */
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/600.css";
-@import "@fontsource/inter/700.css";
+/* Import Inter font with font-display optimization - must come before Tailwind to avoid PostCSS warnings */
+@import "@fontsource/inter/400.css" supports(font-display: swap);
+@import "@fontsource/inter/600.css" supports(font-display: swap);
+@import "@fontsource/inter/700.css" supports(font-display: swap);
 
 @import "tailwindcss";
+
+/* Force font-display: swap for performance (LCP optimization) */
+@font-face {
+  font-family: 'Inter Fallback';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: local('Arial');
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+  size-adjust: 107%;
+}
 
 /* Tailwind v4 Theme Customization */
 @theme {
