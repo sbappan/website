@@ -1,9 +1,13 @@
 import { memo, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import type { Project } from '@/types';
 import { ExternalLink, Github } from 'lucide-react';
 import { Button } from './ui';
 
-interface ProjectCardProps extends Project {}
+interface ProjectCardProps extends Project {
+  isHighlighted?: boolean;
+  isDimmed?: boolean;
+}
 
 // Map gradient names to Tailwind gradient classes (moved outside to prevent recreation on every render)
 const GRADIENT_MAP: Record<string, string> = {
@@ -19,7 +23,7 @@ const GRADIENT_MAP: Record<string, string> = {
  * ProjectCard Component
  *
  * Displays a project with image, title, description, tags, and action buttons.
- * Features hover effects and responsive design.
+ * Features hover effects, responsive design, and skill-based filtering animations.
  *
  * Memoized to prevent unnecessary re-renders (6 instances in the app).
  */
@@ -30,6 +34,8 @@ export const ProjectCard = memo(function ProjectCard({
   tags,
   githubUrl,
   liveUrl,
+  isHighlighted = false,
+  isDimmed = false,
 }: ProjectCardProps) {
   const gradientClass = GRADIENT_MAP[image] || 'from-primary-400 to-secondary-500';
 
@@ -43,7 +49,21 @@ export const ProjectCard = memo(function ProjectCard({
   }, [liveUrl]);
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group">
+    <motion.div
+      animate={{
+        scale: isHighlighted ? [1, 1.02, 1] : isDimmed ? 0.98 : 1,
+        opacity: isDimmed ? 0.4 : 1,
+      }}
+      transition={{
+        scale: { duration: 2, times: [0, 0.5, 1] },
+        opacity: { duration: 0.3 },
+      }}
+      className={`bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group ${
+        isHighlighted
+          ? 'ring-2 ring-primary-500 shadow-lg shadow-primary-500/50 z-10 relative'
+          : ''
+      } ${isDimmed ? 'grayscale z-0 relative' : ''}`}
+    >
       {/* Project Image */}
       <div
         className={`aspect-video bg-gradient-to-br ${gradientClass} relative overflow-hidden`}
@@ -96,6 +116,6 @@ export const ProjectCard = memo(function ProjectCard({
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 });

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Navbar, AnimatedSection, SkillCard, ProjectCard, ScrollProgress } from '@/components';
 import { SectionWrapper } from '@/components/ui';
@@ -7,14 +7,55 @@ import { ArrowRight } from 'lucide-react';
 import { skillCategories } from '@/data/skills';
 import { projects } from '@/data/projects';
 import { aboutData } from '@/data/about';
+import type { Project } from '@/types';
+
+// Utility function to get all skills that have matching projects
+const getSkillsWithProjects = (projectsList: Project[]): Set<string> => {
+  const skillsSet = new Set<string>();
+  projectsList.forEach(project => {
+    project.tags.forEach(tag => skillsSet.add(tag));
+  });
+  return skillsSet;
+};
 
 function App() {
+  // State for skill filtering
+  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
+
+  // Calculate which skills have matching projects
+  const skillsWithProjects = useMemo(() => getSkillsWithProjects(projects), []);
+
   // Memoize button handlers to prevent Button re-renders
   const scrollToProjects = useCallback(() => {
     const element = document.getElementById('projects');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  }, []);
+
+  // Handle skill click: toggle if same, switch if different, and scroll to projects
+  const handleSkillClick = useCallback((skillName: string) => {
+    setSelectedSkill(prev => {
+      const isDeselecting = prev === skillName;
+
+      // Only scroll if we're selecting a skill (not deselecting)
+      if (!isDeselecting) {
+        const element = document.getElementById('projects');
+        if (element) {
+          const offset = 64; // Height of fixed navbar
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          });
+        }
+      }
+
+      // Toggle: null if same, skillName if different
+      return isDeselecting ? null : skillName;
+    });
   }, []);
 
   const handleEmailClick = useCallback(() => {
@@ -154,11 +195,20 @@ function App() {
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
           >
-            {projects.map((project) => (
-              <motion.div key={project.id} variants={itemVariants}>
-                <ProjectCard {...project} />
-              </motion.div>
-            ))}
+            {projects.map((project) => {
+              const isHighlighted = selectedSkill ? project.tags.includes(selectedSkill) : false;
+              const isDimmed = selectedSkill ? !project.tags.includes(selectedSkill) : false;
+
+              return (
+                <motion.div key={project.id} variants={itemVariants}>
+                  <ProjectCard
+                    {...project}
+                    isHighlighted={isHighlighted}
+                    isDimmed={isDimmed}
+                  />
+                </motion.div>
+              );
+            })}
           </motion.div>
         </AnimatedSection>
       </SectionWrapper>
@@ -193,7 +243,13 @@ function App() {
                   >
                     {category.skills.map((skill) => (
                       <motion.div key={skill.name} variants={itemVariants}>
-                        <SkillCard name={skill.name} icon={skill.icon} />
+                        <SkillCard
+                          name={skill.name}
+                          icon={skill.icon}
+                          onClick={handleSkillClick}
+                          isSelected={selectedSkill === skill.name}
+                          hasProjects={skillsWithProjects.has(skill.name)}
+                        />
                       </motion.div>
                     ))}
                   </motion.div>
