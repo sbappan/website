@@ -30,7 +30,7 @@ export function ScrollProgress() {
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-600 to-secondary-600 origin-left z-[60] transition-transform duration-100 ease-out"
+      className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-600 to-secondary-600 origin-left z-[60] transition-transform duration-100 ease-out pointer-events-none"
       style={{
         transform: `scaleX(${scrollProgress / 100})`,
         willChange: 'transform',

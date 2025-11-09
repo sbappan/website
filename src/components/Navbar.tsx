@@ -201,7 +201,7 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-14 bottom-0 w-64 bg-white shadow-xl md:hidden overflow-y-auto"
+              className="fixed right-0 top-14 h-[calc(100vh-3.5rem)] w-64 bg-white shadow-xl md:hidden overflow-y-auto"
             >
               <div className="flex flex-col p-6 gap-6">
                 {navLinks.map((link) => (
